@@ -5,7 +5,7 @@ function handler(req, res) {
     res.end("ok");
     return;
   }
-  res.end("hello v1";
+  res.end("hello v1");
 }
 
 module.exports = { handler };
