@@ -1,0 +1,17 @@
+name: CD
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t hello-cicd:${GITHUB_SHA::7} .
+      - name: Smoke test
+        run: |
+          docker run -d --name t -p 3300:3300 hello-cicd:${GITHUB_SHA::7}
+          sleep 3
+          curl -fsS http://127.0.0.1:3300/health
